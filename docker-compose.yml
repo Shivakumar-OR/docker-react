@@ -1,0 +1,24 @@
+version: "3"
+services: 
+  web:
+    environment: 
+      - CHOKIDAR_USEPOLLING=true
+    build: 
+      # copy entire project excpet docker file, instead of . we may need to give proj name on real scenario
+      context: .
+      dockerfile: Dockerfile.dev
+    ports: 
+    - "3000:3000"
+    volumes: 
+    - /usr/app/node_modules
+    - .:/usr/app
+
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes: 
+      - /usr/app/node_modules
+      - .:/usr/app
+    command: ["npm", "run", "test"]
+
