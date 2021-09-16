@@ -1,0 +1,10 @@
+sudo: reqired
+services:
+# copy of docker running
+  - docker
+before_install:
+# We are tagging because we cannot enter image-id which generates inside travis
+  - docker build -t shiva/docker-react -f Dockerfile.dev .
+
+scripts:
+  - docker run shiva/docker-react npm run test -- --coverage
